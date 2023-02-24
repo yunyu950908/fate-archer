@@ -5,11 +5,13 @@ from auth_client import AuthClient
 class ChatGPTClient:
     def __init__(self) -> None:
         tokens = AuthClient().get_tokens()
-        self.chatbot = Chatbot(config={
-            "access_token": tokens.get("access_token"),
-            "session_token": tokens.get("session_token"),
-            "paid": True
-        })
+        self.chatbot = Chatbot(
+            config={
+                "access_token": tokens.get("access_token"),
+                "session_token": tokens.get("session_token"),
+                "paid": True,
+            }
+        )
 
     """
     {
