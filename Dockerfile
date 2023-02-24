@@ -19,6 +19,7 @@ COPY . .
 ENV FLASK_APP=app.py
 ENV EMAIL_ADDRESS=$EMAIL_ADDRESS
 ENV PASSWORD=$PASSWORD
+ENV REDIS_HOST=$REDIS_HOST
 
 # Expose the port that the Flask app will run on
 EXPOSE 5000
