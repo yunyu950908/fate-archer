@@ -8,6 +8,7 @@ env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   IMAGE_NAME: yunyu950908/fate-archer
+  SHA_SHORT: $(git rev-parse --short=7 ${{ github.sha }})
 
 jobs:
   build:
@@ -24,7 +25,7 @@ jobs:
           password: ${{ env.DOCKER_PASSWORD }}
 
       - name: Build and tag Docker image
-        run: docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha | slice(0,7) }} .
+        run: docker build -t ${{ env.IMAGE_NAME }}:${{ env.SHA_SHORT }} .
 
       - name: Push Docker image to Docker Hub
-        run: docker push ${{ env.IMAGE_NAME }}:${{ github.sha | slice(0,7) }}
+        run: docker push ${{ env.IMAGE_NAME }}:${{ env.SHA_SHORT }}
