@@ -5,9 +5,9 @@ import redis
 from datetime import datetime
 from OpenAIAuth import Authenticator
 
-email_address = os.environ.get("email_address")
-password = os.environ.get("password")
-proxy = os.environ.get("proxy")
+email_address = os.environ.get("EMAIL_ADDRESS")
+password = os.environ.get("PASSWORD")
+proxy = os.environ.get("PROXY")
 
 if email_address is None or password is None:
     print(f"{datetime.now()}\tInvalid email_address or password")

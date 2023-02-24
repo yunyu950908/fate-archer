@@ -15,8 +15,8 @@ COPY . .
 
 # Set the environment variable for Flask
 ENV FLASK_APP=app.py
-ENV email_address=$email_address
-ENV password=$password
+ENV EMAIL_ADDRESS=$EMAIL_ADDRESS
+ENV PASSWORD=$PASSWORD
 
 # Expose the port that the Flask app will run on
 EXPOSE 5000
