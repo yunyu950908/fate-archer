@@ -9,6 +9,10 @@ email_address = os.environ.get('email_address')
 password = os.environ.get('password')
 proxy = os.environ.get('proxy')
 
+if email_address is None or password is None:
+    print(f"{datetime.now()}\tInvalid email_address or password")
+    sys.exit(1)
+
 
 class AuthClient:
     def __init__(self):
@@ -17,10 +21,6 @@ class AuthClient:
         self.r = redis.Redis(host='localhost', port=6379, db=0)
 
     def start(self):
-        if email_address is None or password is None:
-            print(f"{datetime.now()}\tInvalid email_address or password")
-            sys.exit(1)
-
         auth = Authenticator(
             email_address,
             password,
