@@ -2,7 +2,15 @@ name: Build and push Docker image
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - master
+      - dev
+  pull_request:
+    branches:
+      - main
+      - master
+      - dev
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
