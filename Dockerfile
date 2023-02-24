@@ -17,8 +17,8 @@ COPY . .
 
 # Set the environment variable for Flask
 ENV FLASK_APP=app.py
-ENV EMAIL_ADDRESS=$EMAIL_ADDRESS
-ENV PASSWORD=$PASSWORD
+ENV OPENAI_EMAIL=$OPENAI_EMAIL
+ENV OPENAI_PASSWORD=$OPENAI_PASSWORD
 ENV REDIS_HOST=$REDIS_HOST
 
 # Expose the port that the Flask app will run on

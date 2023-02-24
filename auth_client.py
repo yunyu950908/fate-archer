@@ -5,8 +5,8 @@ import redis
 from datetime import datetime
 from OpenAIAuth import Authenticator
 
-email_address = os.environ.get("EMAIL_ADDRESS")
-password = os.environ.get("PASSWORD")
+email_address = os.environ.get("OPENAI_EMAIL")
+password = os.environ.get("OPENAI_PASSWORD")
 proxy = os.environ.get("PROXY")
 redis_host = os.environ.get("REDIS_HOST")
 
