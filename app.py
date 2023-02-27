@@ -14,6 +14,10 @@ def resp_success(data=None):
     return jsonify({"success": True, "data": data})
 
 
+def resp_error(message=None):
+    return jsonify({"success": False, "message": message})
+
+
 @app.route("/")
 def hello():
     return "Hello, World!"
@@ -26,6 +30,9 @@ def ask():
     prompt = data.get("prompt")
     conversation_id = data.get("conversation_id")
     parent_id = data.get("parent_id")
+
+    if prompt is None or not prompt:
+        return resp_error(f"prompt={prompt}")
 
     response = client.ask(prompt, conversation_id, parent_id)
 
@@ -40,8 +47,17 @@ def auth():
 
 @api_v1.route("/conversations", methods=["GET"])
 def get_conversations():
-    offset = request.args.get("offset")
-    limit = request.args.get("limit")
+    offset = request.args.get("offset", None)
+    limit = request.args.get("limit", None)
+
+    def check_is_valid(v: str):
+        if v is not None:
+            if v is not v.isdigit() or int(v) < 0:
+                return False
+        return True
+
+    if not check_is_valid(offset) or not check_is_valid(limit):
+        return resp_error(f"offset={offset}, limit={limit}"), 400
 
     conversations = client.chatbot.get_conversations(offset, limit)
     return resp_success(conversations)
@@ -50,6 +66,10 @@ def get_conversations():
 @api_v1.route("/messages", methods=["GET"])
 def get_msg_history():
     conversation_id = request.args.get("conversation_id")
+
+    if conversation_id is None or not conversation_id:
+        return resp_error(f"conversation_id={conversation_id}")
+
     messages = client.chatbot.get_msg_history(convo_id=conversation_id)
     return resp_success(messages)
 
@@ -61,6 +81,9 @@ def gen_title():
 @api_v1.route("/conversation", methods=["DELETE"])
 def delete_conversation():
     conversation_id = request.args.get("conversation_id")
+    if conversation_id is None or not conversation_id:
+        return resp_error(f"conversation_id={conversation_id}"), 400
+
     client.chatbot.delete_conversation(convo_id=conversation_id)
     return resp_success()
 
