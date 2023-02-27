@@ -50,9 +50,9 @@ def get_conversations():
     offset = request.args.get("offset", None)
     limit = request.args.get("limit", None)
 
-    def check_is_valid(v: str):
+    def check_is_valid(v: str | None) -> bool:
         if v is not None:
-            if v is not v.isdigit() or int(v) < 0:
+            if not v.isdigit() or int(v) < 0:
                 return False
         return True
 
