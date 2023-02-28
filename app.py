@@ -1,3 +1,6 @@
+"""
+A simple ChatGPT HTTP API server
+"""
 from flask import Flask, request, jsonify, Blueprint
 from chatgpt_client import ChatGPTClient
 from auth_client import AuthClient
@@ -6,8 +9,6 @@ from auth_client import AuthClient
 app = Flask(__name__)
 
 api_v1 = Blueprint("api_v1", __name__, url_prefix="/api/v1")
-
-client = ChatGPTClient()
 
 
 def resp_success(data=None):
@@ -25,8 +26,8 @@ def hello():
 
 @api_v1.route("/ask", methods=["POST"])
 def ask():
+    client = ChatGPTClient()
     data = request.get_json()
-
     prompt = data.get("prompt")
     conversation_id = data.get("conversation_id")
     parent_id = data.get("parent_id")
@@ -47,12 +48,13 @@ def auth():
 
 @api_v1.route("/conversations", methods=["GET"])
 def get_conversations():
+    client = ChatGPTClient()
     offset = request.args.get("offset", None)
     limit = request.args.get("limit", None)
 
-    def check_is_valid(v: str | None) -> bool:
-        if v is not None:
-            if not v.isdigit() or int(v) < 0:
+    def check_is_valid(value: str | None) -> bool:
+        if value is not None:
+            if not value.isdigit() or int(value) < 0:
                 return False
         return True
 
@@ -65,6 +67,7 @@ def get_conversations():
 
 @api_v1.route("/messages", methods=["GET"])
 def get_msg_history():
+    client = ChatGPTClient()
     conversation_id = request.args.get("conversation_id")
 
     if conversation_id is None or not conversation_id:
@@ -74,12 +77,9 @@ def get_msg_history():
     return resp_success(messages)
 
 
-def gen_title():
-    pass
-
-
 @api_v1.route("/conversation", methods=["DELETE"])
 def delete_conversation():
+    client = ChatGPTClient()
     conversation_id = request.args.get("conversation_id")
     if conversation_id is None or not conversation_id:
         return resp_error(f"conversation_id={conversation_id}"), 400
