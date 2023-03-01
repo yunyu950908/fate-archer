@@ -35,10 +35,8 @@ def ask():
     if prompt is None or not prompt:
         return resp_error(f"prompt={prompt}")
 
-    try:
-        response = client.ask(prompt, conversation_id, parent_id)
-    except Exception as e:
-        return resp_error(jsonify(e))
+    response = client.ask(prompt, conversation_id, parent_id)
+
     return resp_success(response)
 
 
