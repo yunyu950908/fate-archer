@@ -38,7 +38,8 @@ def ask():
     try:
         response = client.ask(prompt, conversation_id, parent_id)
     except Exception as e:
-        return resp_error(jsonify(e))
+        print(e)
+        return resp_error(f"Internal Server Error"), 500
     return resp_success(response)
 
 
