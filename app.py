@@ -37,7 +37,7 @@ def ask():
 
     response = client.ask(prompt, conversation_id, parent_id)
 
-    return jsonify(response)
+    return resp_success(response)
 
 
 @api_v1.route("/auth", methods=["POST"])
