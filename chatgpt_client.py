@@ -32,5 +32,15 @@ class ChatGPTClient:
 
 
 if __name__ == "__main__":
-    data = ChatGPTClient().ask("你好")
-    print(data)
+    c = ChatGPTClient()
+    """
+    [
+        {
+            "id": "b46b045d-c893-4ec6-b40f-4013484e096c",
+            "title": "INTJ Personality Description",
+            "create_time": "2023-02-26T09:16:16.467803"
+        }
+    ]
+    """
+    conversations = c.chatbot.get_conversations(offset=0, limit=2)
+    print(conversations)
