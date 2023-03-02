@@ -19,6 +19,14 @@ def resp_error(message=None):
     return jsonify({"success": False, "message": message})
 
 
+@api_v1.errorhandler(Exception)
+def handle_error(error):
+    # handle the exception by returning a JSON response with the error message
+    response = jsonify({"success": False, "message": str(error)})
+    response.status_code = 500
+    return response
+
+
 @app.route("/")
 def hello():
     return "Hello, World!"
