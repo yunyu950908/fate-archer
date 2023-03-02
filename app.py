@@ -21,9 +21,9 @@ def resp_error(message=None):
 
 @api_v1.errorhandler(Exception)
 def handle_error(error):
-    # handle the exception by returning a JSON response with the error message
-    response = jsonify({"success": False, "message": str(error)})
-    response.status_code = 500
+    err_dict = {"source": error.source, "message": error.message, "code": error.code}
+    response = jsonify({"success": False, "message": str(error), "data": err_dict})
+    response.status_code = 520
     return response
 
 
