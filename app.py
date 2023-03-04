@@ -32,6 +32,11 @@ def hello():
     return "Hello, World!"
 
 
+@api_v1.route("/health")
+def health():
+    return resp_success()
+
+
 @api_v1.route("/ask", methods=["POST"])
 def ask():
     client = ChatGPTClient()
